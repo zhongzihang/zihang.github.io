@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>生日快乐！</title>
+    <style>
+        /* 基本样式 */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+            overflow: hidden; /* 防止滚动条出现 */
+        }
+
+        /* 生日卡片容器 */
+        .birthday-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* 生日卡片 */
+        .birthday-card {
+            width: 400px;
+            height: 500px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            animation: rotateCard 10s infinite linear;
+            position: relative;
+        }
+
+        /* 生日卡片前面 */
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card-front {
+            background: url('https://images.unsplash.com/photo-1518709268803-4e9042af9f23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc2N3wwfDF8c2VhcmNofDF8fGViaWxfZWZmfGVufDB8fHx8MTY4OTI3ODQ4Mw&ixlib=rb-4.0.3&q=80&w=1080') no-repeat center center;
+            background-size: cover;
+            border: 2px solid #ff6347;
+        }
+
+        .card-back {
+            background-color: #ffebcd;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 生日祝福文字 */
+        .card-back h1 {
+            color: #ff4500;
+            margin-bottom: 10px;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card-back p {
+            font-size: 18px;
+            color: #555;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* 按钮样式 */
+        .card-back button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .card-back button:hover {
+            background-color: #ff4500;
+        }
+
+        /* 动画：卡片旋转 */
+        @keyframes rotateCard {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* 彩色光斑效果 */
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .sparkles div {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: sparkle 1.5s infinite ease-in-out;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* 随机生成光斑位置 */
+        .sparkles div:nth-child(1) { top: 20%; left: 30%; animation-delay: 0s; }
+        .sparkles div:nth-child(2) { top: 40%; left: 70%; animation-delay: 0.3s; }
+        .sparkles div:nth-child(3) { top: 60%; left: 50%; animation-delay: 0.6s; }
+        .sparkles div:nth-child(4) { top: 80%; left: 20%; animation-delay: 0.9s; }
+        .sparkles div:nth-child(5) { top: 10%; left: 80%; animation-delay: 1.2s; }
+        .sparkles div:nth-child(6) { top: 30%; left: 10%; animation-delay: 1.5s; }
+    </style>
+</head>
+<body>
+    <div class="birthday-container">
+        <div class="birthday-card">
+            <div class="card-front"></div>
+            <div class="card-back">
+                <h1>生日快乐！</h1>
+                <p>
+                    愿你的每一天都充满欢笑与阳光，<br>
+                    健康与幸福永远伴随着你。<br>
+                    祝你在人生的旅程中，<br>
+                    实现所有的梦想！
+                </p>
+                <button onclick="showConfetti()">庆祝一下</button>
+            </div>
+            <div class="sparkles">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti动画库 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        function showConfetti() {
+            confetti({
+                particleCount: 200,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
+</body>
+</html>
