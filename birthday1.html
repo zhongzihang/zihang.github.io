@@ -115,6 +115,49 @@
             overflow: hidden;
         }
 
+.balloons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    pointer-events: none;
+}
+.balloon {
+    width: 50px;
+    height: 70px;
+    background-color: #ff69b4;
+    border-radius: 50% 50% 50% 50%;
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+    animation-delay: calc(-1s * var(--i));
+}
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    width: 2px;
+    height: 15px;
+    background-color: #555;
+}
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-100px) rotate(10deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(0) rotate(-10deg);
+        opacity: 1;
+    }
+}
+
+        
+
         .sparkles div {
             position: absolute;
             width: 8px;
@@ -145,6 +188,16 @@
     </style>
 </head>
 <body>
+
+<div class="balloons">
+    <div class="balloon" style="--i:0;"></div>
+    <div class="balloon" style="--i:1;"></div>
+    <div class="balloon" style="--i:2;"></div>
+    <div class="balloon" style="--i:3;"></div>
+    <div class="balloon" style="--i:4;"></div>
+</div>
+
+    
     <div class="birthday-container">
         <div class="birthday-card">
             <div class="card-front"></div>
