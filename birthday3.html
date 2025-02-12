@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>🎇 魔法生日庆典</title>
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffd93d;
+            --accent: #6c5ce7;
+        }
+
+        body {
+            margin: 0;
+            background: #1a1a1a;
+            overflow: hidden;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        /* 主容器 */
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+
+        /* 动态标题 */
+        .magic-title {
+            font-size: 3.5rem;
+            text-shadow: 0 0 20px var(--primary);
+            animation: titleGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            50% { text-shadow: 0 0 40px var(--accent); }
+        }
+
+        /* 特效元素 */
+        .effect {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 心形特效 */
+        .heart {
+            color: #ff3860;
+            animation: heartFloat 3s linear forwards;
+        }
+
+        @keyframes heartFloat {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
+        }
+
+        /* 星光特效 */
+        .star {
+            width: 3px;
+            height: 3px;
+            background: white;
+            animation: starTwinkle 1.5s infinite;
+        }
+
+        @keyframes starTwinkle {
+            50% { opacity: 0.3; }
+        }
+
+        /* 旋转文字特效 */
+        .rotate-text {
+            position: absolute;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 霓虹祝福语 */
+        .neon-message {
+            font-size: 2rem;
+            text-shadow: 0 0 10px var(--primary),
+                         0 0 20px var(--primary),
+                         0 0 30px var(--accent);
+            animation: neonPulse 1.5s infinite;
+        }
+
+        @keyframes neonPulse {
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景特效层 -->
+    <div id="effects"></div>
+
+    <!-- 主内容 -->
+    <div class="container">
+        <h1 class="magic-title">🎂 Happy Birthday!</h1>
+        
+        <!-- 祝福图片 -->
+        <img src="https://cdn.pixabay.com/photo/2016/10/18/21/22/birthday-1751296_1280.png" 
+             style="width: 300px; animation: float 3s ease-in-out infinite">
+        
+        <!-- 动态祝福语 -->
+        <div class="neon-message" id="message"></div>
+        
+        <!-- 音乐控制 -->
+        <button onclick="toggleMusic()" style="
+            background: var(--accent);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            color: white;
+            margin-top: 2rem;
+            cursor: pointer;
+        ">🎵 音乐开关</button>
+    </div>
+
+    <!-- 背景音乐 -->
+    <audio id="bgm" loop>
+        <source src="https://cdn.pixabay.com/audio/2023/03/27/audio_8b3c9c1c0f.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 初始化音乐系统
+        const bgm = document.getElementById('bgm');
+        let isPlaying = true;
+        
+        // 自动播放处理
+        document.addEventListener('click', () => {
+            if(isPlaying) {
+                bgm.play();
+                isPlaying = false;
+            }
+        });
+
+        // 特效生成器
+        function createEffect(emoji, animation) {
+            const el = document.createElement('div');
+            el.className = `effect ${animation}`;
+            el.innerHTML = emoji;
+            el.style.left = Math.random() * 100 + '%';
+            document.body.appendChild(el);
+            
+            setTimeout(() => el.remove(), 3000);
+        }
+
+        // 随机祝福语系统
+        const messages = [
+            "✨ 愿你的每一天都比星辰更闪耀",
+            "🎉 新的一岁继续闪闪发光！",
+            "🌈 岁岁常欢愉，万事皆胜意",
+            "🎁 美好终将如期而至",
+            "💖 心之所向皆能成真"
+        ];
+
+        function showRandomMessage() {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = messages[Math.floor(Math.random() * messages.length)];
+            
+            // 添加文字动画
+            messageDiv.style.animation = 'none';
+            messageDiv.offsetHeight; // 触发重绘
+            messageDiv.style.animation = 'neonPulse 1.5s infinite';
+            
+            // 触发粒子特效
+            for(let i=0; i<20; i++) {
+                setTimeout(() => {
+                    createEffect('💫', 'heart');
+                    createEffect('✨', 'star');
+                }, i * 50);
+            }
+        }
+
+        // 自动特效循环
+        setInterval(() => {
+            createEffect('❤️', 'heart');
+            createEffect('🌟', 'star');
+            createEffect('🎈', 'heart');
+        }, 800);
+
+        // 音乐控制
+        function toggleMusic() {
+            bgm.paused ? bgm.play() : bgm.pause();
+        }
+
+        // 初始化
+        setInterval(showRandomMessage, 3000);
+        showRandomMessage();
+    </script>
+</body>
+</html>
