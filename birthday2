@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>🎂 魔法生日派对</title>
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffd93d;
+            --accent: #6c5ce7;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 主容器 */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 输入区域 */
+        .input-group {
+            margin: 2rem 0;
+        }
+
+        input {
+            padding: 1rem;
+            border: 3px solid var(--primary);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin: 0.5rem;
+            width: 80%;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* 魔法按钮 */
+        .magic-btn {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+        }
+
+        /* 祝福展示区 */
+        #message {
+            margin: 2rem 0;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            min-height: 120px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s;
+        }
+
+        /* 动画特效 */
+        .floating-cake {
+            font-size: 4rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* 彩纸特效 */
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            animation: confetti-fall 3s linear forwards;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        /* 背景气球 */
+        .balloon {
+            position: fixed;
+            width: 60px;
+            height: 80px;
+            border-radius: 80%;
+            animation: balloon-float 8s linear infinite;
+            opacity: 0.7;
+            z-index: 0;
+        }
+
+        @keyframes balloon-float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景气球 -->
+    <div class="balloon" style="left:10%; background:#ff6b6b; animation-delay:0s"></div>
+    <div class="balloon" style="left:30%; background:#ffd93d; animation-delay:2s"></div>
+    <div class="balloon" style="left:70%; background:#6c5ce7; animation-delay:4s"></div>
+
+    <div class="container">
+        <div class="floating-cake">🎂</div>
+        <h1 style="color:var(--primary); margin-bottom:1rem;">魔法生日祝福</h1>
+        
+        <div class="input-group">
+            <input type="text" id="name" placeholder="输入寿星的名字">
+            <input type="number" id="age" placeholder="输入年龄（可选）">
+        </div>
+        
+        <button class="magic-btn" onclick="generateMagic()">✨ 生成祝福</button>
+        <div id="message"></div>
+    </div>
+
+    <!-- 背景音乐 -->
+    <audio id="bgm" loop>
+        <source src="https://cdn.pixabay.com/audio/2023/03/27/audio_8b3c9c1c0f.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 初始化音乐
+        const bgm = document.getElementById('bgm');
+        let isFirstClick = true;
+
+        // 点击页面任意位置播放音乐
+        document.addEventListener('click', () => {
+            if(isFirstClick) {
+                bgm.play();
+                isFirstClick = false;
+            }
+        });
+
+        // 祝福模板库
+        const templates = [
+            (name, age) => `
+                <div style="color:${getRandomColor()}">
+                    🎉 ${name}${age ? ` ${age}岁` : ''}生日快乐！<br>
+                    <span style="font-size:0.8em">愿你的每一天都比星辰更闪耀✨</span>
+                </div>
+            `,
+            (name, age) => `
+                <div style="color:${getRandomColor()}">
+                    🌈 亲爱的${name}<br>
+                    ${age ? `在${age}岁的新篇章里` : '在新的一岁里'}<br>
+                    <span style="font-size:0.8em">继续书写属于你的传奇！</span>
+                </div>
+            `,
+            (name, age) => `
+                <div style="color:${getRandomColor()}">
+                    🎁 ${name}生日快乐！<br>
+                    <span style="font-size:0.8em">${age ? age + '岁的旅程' : '今天'}必定充满惊喜！</span>
+                </div>
+            `
+        ];
+
+        // 生成祝福
+        function generateMagic() {
+            const name = document.getElementById('name').value || '亲爱的朋友';
+            const age = document.getElementById('age').value;
+            const messageDiv = document.getElementById('message');
+            
+            // 清空旧内容
+            messageDiv.innerHTML = '';
+            
+            // 生成新祝福
+            const template = templates[Math.floor(Math.random() * templates.length)];
+            messageDiv.innerHTML = template(name, age);
+            
+            // 触发动画
+            messageDiv.style.opacity = '1';
+            messageDiv.style.transform = 'translateY(0)';
+            
+            // 添加特效
+            createConfetti();
+            addSparkles();
+        }
+
+        // 创建彩纸特效
+        function createConfetti() {
+            for(let i=0; i<50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    background: ${getRandomColor()};
+                    animation-duration: ${Math.random() * 3 + 2}s;
+                `;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // 随机颜色
+        function getRandomColor() {
+            return `hsl(${Math.random() * 360}, 70%, 60%)`;
+        }
+
+        // 添加星光
+        function addSparkles() {
+            const sparkles = ['✨', '🌟', '💫', '⭐'];
+            for(let i=0; i<15; i++) {
+                const spark = document.createElement('div');
+                spark.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                spark.style.cssText = `
+                    position: fixed;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    font-size: ${Math.random() * 24 + 16}px;
+                    animation: sparkle ${Math.random() * 0.5 + 0.3}s ease-out;
+                    opacity: 0;
+                `;
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 500);
+            }
+        }
+    </script>
+</body>
+</html>
