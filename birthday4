@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>🎇 终极生日狂欢</title>
+    <style>
+        :root {
+            --color1: #ff1493;
+            --color2: #7fff00;
+            --color3: #00ffff;
+        }
+
+        body {
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: 'Microsoft YaHei', cursive;
+            cursor: pointer;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 动态标题特效 */
+        .dynamic-title {
+            font-size: 5rem;
+            background: linear-gradient(45deg, var(--color1), var(--color2), var(--color3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleAnim 3s infinite;
+            text-shadow: 0 0 30px var(--color1);
+        }
+
+        @keyframes titleAnim {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* 魔法蛋糕特效 */
+        .cake-container {
+            position: relative;
+            margin: 2rem;
+        }
+
+        .magic-cake {
+            width: 300px;
+            filter: drop-shadow(0 0 20px var(--color2));
+            animation: 
+                cakeFloat 3s ease-in-out infinite,
+                cakeGlow 2s infinite alternate;
+        }
+
+        @keyframes cakeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes cakeGlow {
+            100% { filter: drop-shadow(0 0 50px var(--color1)); }
+        }
+
+        /* 粒子爆炸特效 */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: particleAnim 1.5s forwards;
+        }
+
+        @keyframes particleAnim {
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+        }
+
+        /* 霓虹文字特效 */
+        .neon-text {
+            font-size: 2.5rem;
+            animation: neonPulse 2s infinite;
+            text-shadow: 
+                0 0 10px var(--color1),
+                0 0 20px var(--color2),
+                0 0 30px var(--color3);
+        }
+
+        @keyframes neonPulse {
+            50% { opacity: 0.5; }
+        }
+
+        /* 音乐控制面板 */
+        .music-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .music-panel button {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid var(--btn-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .music-panel button:hover {
+            background: var(--btn-color);
+            box-shadow: 0 0 20px var(--btn-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="dynamic-title">🎂 生日快乐！</h1>
+        
+        <div class="cake-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/3196/3196971.png" 
+                 class="magic-cake" alt="魔法蛋糕">
+        </div>
+
+        <div id="message" class="neon-text"></div>
+
+        <!-- 音乐控制台 -->
+        <div class="music-panel">
+            <button onclick="changeTrack(0)" style="--btn-color: var(--color1)">🎵 欢乐颂</button>
+            <button onclick="changeTrack(1)" style="--btn-color: var(--color2)">🎶 梦幻曲</button>
+            <button onclick="changeTrack(2)" style="--btn-color: var(--color3)">🎧 狂欢曲</button>
+        </div>
+    </div>
+
+    <audio id="bgm" loop>
+        <source id="musicSrc" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 音乐库
+        const musicTracks = [
+            'https://cdn.pixabay.com/audio/2023/03/27/audio_8b3c9c1c0f.mp3',
+            'https://cdn.pixabay.com/audio/2023/04/07/audio_3f6e0c7c03.mp3',
+            'https://cdn.pixabay.com/audio/2023/05/15/audio_6e9b4c3a4a.mp3'
+        ];
+
+        // 粒子系统
+        function createParticles(x, y) {
+            for(let i=0; i<50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    left: ${x}px;
+                    top: ${y}px;
+                    width: ${Math.random()*10+5}px;
+                    height: ${Math.random()*10+5}px;
+                    background: hsl(${Math.random()*360}, 100%, 70%);
+                    border-radius: 50%;
+                    --tx: ${(Math.random()-0.5)*200}px;
+                    --ty: ${(Math.random()-0.5)*200}px;
+                `;
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }
+
+        // 音乐控制
+        let currentTrack = 0;
+        const bgm = document.getElementById('bgm');
+        
+        function changeTrack(index) {
+            currentTrack = index;
+            document.getElementById('musicSrc').src = musicTracks[index];
+            bgm.load();
+            bgm.play();
+        }
+
+        // 初始化音乐
+        changeTrack(0);
+
+        // 点击特效
+        document.addEventListener('click', (e) => {
+            createParticles(e.clientX, e.clientY);
+        });
+
+        // 自动祝福语轮播
+        const messages = [
+            "愿你的笑容永远灿烂如星✨",
+            "新的一岁继续闪闪发光🌟",
+            "所有美好都会如期而至🎁",
+            "每一天都值得被庆祝🎉"
+        ];
+
+        let msgIndex = 0;
+        setInterval(() => {
+            document.getElementById('message').textContent = messages[msgIndex];
+            msgIndex = (msgIndex + 1) % messages.length;
+        }, 3000);
+    </script>
+</body>
+</html>
