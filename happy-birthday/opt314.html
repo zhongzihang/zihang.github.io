@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<iframe
+        src="./html/login.html"
+        id="iframepage"
+        sandbox="allow-scripts allow-same-origin"
+        frameborder="0"
+></iframe>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // 自适应高度 + 滚动优化
+    function changeFrameHeight() {
+        const iframe = document.getElementById('iframepage');
+        const contentHeight = iframe.contentDocument.documentElement.scrollHeight;
+        iframe.style.height = `${contentHeight}px`;
+
+        // 平滑滚动增强
+        iframe.contentWindow.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // 初始化加载
+    window.onload = changeFrameHeight;
+    // 响应式适配
+    window.addEventListener('resize', changeFrameHeight);
+</script>
+</body>
+</html>
