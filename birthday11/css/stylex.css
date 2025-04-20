@@ -1,0 +1,137 @@
+body,button,input,textarea
+{font-family:"微软雅黑",sans-serif}
+
+a
+{text-decoration:none;}
+
+/*Cake蛋糕背景图片修改*/
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+body {
+    background: url(../img/bg.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+#mainDiv{width:100%;
+    height:100%}
+
+#loveHeart{float:left;
+    width:670px;
+    height:625px}
+
+#garden
+{width:100%;
+    height:100%}
+#elapseClock
+{text-align:right;
+    font-size:18px;
+    margin-top:10px;
+    margin-bottom:10px}
+#words
+{
+    font-family: "微软雅黑", sans-serif;
+    width:500px;
+    font-size:24px;
+    color:#666}
+#messages
+{margin-top:80px;
+    margin-left:80px;
+    display:none}
+#elapseClock .digit
+{font-family:"digit",sans-serif;
+    font-size:36px}
+#loveu
+   {padding:5px;
+    font-size:22px;
+    margin-top:55px;
+    margin-left:80px;
+    text-align:center;
+    display:none}
+#loveu .signature
+    {margin-top:10px;
+    font-size:20px;
+    font-style:italic}
+#clickSound
+{display:none}
+
+
+#code {
+    position: fixed; /* 固定定位 */
+    top: 40%; /* 垂直居中 */
+    right: 1vh; /* 紧靠右边边缘 */
+    transform: translateY(-50%); /* 垂直居中 */
+    width: 550px; /* 固定宽度 */
+    color: #050505; /* 文字颜色 */
+    font-family: "微软雅黑", sans-serif; /* 字体 */
+    font-size: 12px; /* 字体大小 */
+    line-height: 26px; /* 行高 */
+    text-align: left; /* 文字左对齐 */
+    padding: 20px; /* 内边距 */
+    box-sizing: border-box; /* 确保 padding 不会增加元素的总宽度 */
+    background-color: rgba(255, 255, 255, 0.65); /* 半透明背景 */
+    border: 2px solid rgba(185, 162, 162, 0.58); /* 边框 */
+    border-radius: 25px; /* 圆角 */
+    z-index: 666; /* 确保在最上层 */
+    overflow: hidden; /* 隐藏超出部分 */
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); /* 初始状态：完全隐藏 */
+    margin-right: 20px; /* 与右边边缘保持一定距离 */
+}
+
+#code .string
+{color:#2a36ff}
+#code .keyword
+{color:#7f0055;
+    font-weight:bold}
+#code .space
+{margin-left:7px}
+
+/*打印文字颜色*/
+#code .comments
+{
+    color: #131212;
+    font-size: 2em; /* 相对于 #code 的字体大小 */
+    line-height: 1.1; /* 调整行间距 */
+}
+a {
+    text-decoration: none;
+    color: #3a5aea;
+    font-size: 35px;
+}
+
+#copyright
+  {
+    margin-top:10px;
+    text-align:center;
+    width:100%;
+    color:#F180C5}
+#errorMsg
+   {
+    width:100%;
+    text-align:center;
+    font-size:24px;
+    position:absolute;
+    top:100px;
+    left:0}
+#copyright a
+{color:#F180C5}
+
+.bb {
+    display: block;
+    text-align: center;
+    padding-left: 100px; /* 修正拼写错误 */
+    font-size: 40px;
+    color: #14b3ef;
+    cursor: pointer;
+}
+
+#yyxz
+   {position: fixed;
+    bottom: 6.8em;
+    left:8%;
+    z-index:9999;
+}

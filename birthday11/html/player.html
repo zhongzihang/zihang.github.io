@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Player</title>
+    <style>
+        /* 播放器样式 */
+        #div_play_button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 35vw; /* 播放按钮宽度为视口宽度的 35% */
+            height: 35vw; /* 播放按钮高度为视口宽度的 35% */
+            background-color: rgba(177, 213, 243, 0);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            animation-name: rotateAnimation;
+            animation-duration: 2s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-play-state: paused;
+            z-index: 99999;
+        }
+
+        #div_play_button.playing {
+            animation-play-state: running;
+        }
+
+        /* 播放按钮大小 */
+        #div_play_button img {
+            width: 35vw;
+            height: 35vw;
+        }
+
+        @keyframes rotateAnimation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="div_play_button" onclick="toggleAudio()">
+    <img id="play_button_img" src="https://t.tutu.to/img/vPYwM" alt="播放按钮">
+</div>
+<audio id="audio_music" data-id="audio_music" preload="auto" loop>
+    <source src="https://music.163.com/song/media/outer/url?id=2088198840.mp3" type="audio/mpeg" />
+</audio>
+
+<script src="../js/player.js"></script>
+</body>
+</html>
