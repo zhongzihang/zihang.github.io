@@ -1,29 +1,22 @@
-var S = {
-    init: function () {
-        var m = 0;
-        var action = window.location.href,
-            i = action.indexOf('?a=');
+var S = {};
 
-        S.Drawing.init('.canvas');
-        document.body.classList.add('body--ready');
+S.init = function () {
+    var action = window.location.href,
+        i = action.indexOf('?a=');
 
-        if (i !== -1) {
-            S.UI.simulate(decodeURI(action).substring(i + 3));
-        } else {
-            S.UI.simulate('Hi 小可爱|巧克力|chocolate|邱耀可|Tina Qiu|祝你|27岁|生日快乐|Happy Birthday|永远开心快乐|笑口常开|幸福美满|记得|保持笑容哟|准备好了吗？|#countdown 5||');
-        }
+    S.Drawing.init('.canvas');
+    document.body.classList.add('body--ready');
 
-        S.Drawing.loop(function () {
-            m++;
-            S.Shape.render();
-            //console.log(m);
-            if (m == 4300) {  // 将700改为1500，延长展示时间
-                window.location.href = "../html/BirthdayCake.html";
-            }
-        });
-
+    if (i !== -1) {
+        S.UI.simulate(decodeURI(action).substring(i + 3));
+    } else {
+        S.UI.simulate('Hi 小可爱|巧克力|chocolate|邱耀可|Tina Qiu|祝你|27岁|生日快乐|Happy Birthday|永远开心快乐|笑口常开|幸福美满|记得|保持笑容哟|准备好了吗？|#countdown 5||');
     }
-};
+
+    S.Drawing.loop(function () {
+        S.Shape.render();
+    });
+}
 
 
 S.Drawing = (function () {
@@ -160,6 +153,11 @@ S.UI = (function () {
 
                     timedAction(function (index) {
                         if (index === 0) {
+                            // 倒计时结束后等待1秒跳转
+                            setTimeout(function() {
+                                window.location.href = "../html/BirthdayCake.html";
+                            }, 1000);
+
                             if (sequence.length === 0) {
                                 S.Shape.switchShape(S.ShapeBuilder.letter(''));
                             } else {
